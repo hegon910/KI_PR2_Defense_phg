@@ -25,22 +25,6 @@ public class CameraWalk : MonoBehaviour
         SetMonsterVisible(true);
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (!other.CompareTag("LightZone")) return;
-
-        SetHumanVisible(true);
-        SetMonsterVisible(false);
-    }
-
-    //  이 메서드를 Collider 강제 종료 시에도 호출할 수 있도록 제공
-    public void OnCustomTriggerExit()
-    {
-        Debug.Log("Forced Exit Trigger");
-
-        SetHumanVisible(true);
-        SetMonsterVisible(false);
-    }
 
     private void SetHumanVisible(bool isVisible)
     {

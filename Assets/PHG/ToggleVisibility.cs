@@ -26,22 +26,8 @@ public class SpotlightTriggerToggle : MonoBehaviour
 
             if (spotLight != null)
                 spotLight.enabled = isActive;
-
-            if (triggerZoneCollider != null)
-            {
-                if (!isActive)
-                {
-                    // Trigger 끄기 전에 강제 Exit 처리
-                    foreach (var obj in objectsInside)
-                    {
-                        // 수동으로 처리할 로직 넣기
-                        obj.SendMessage("OnCustomTriggerExit", SendMessageOptions.DontRequireReceiver);
-                    }
-                    objectsInside.Clear();
-                }
-
                 triggerZoneCollider.enabled = isActive;
-            }
+            
         }
     }
 
