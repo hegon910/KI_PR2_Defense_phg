@@ -6,25 +6,39 @@ public class CameraWalk : MonoBehaviour
     [SerializeField] private GameObject monsterModel;
 
     private Renderer[] monsterRenderers;
+    private bool hasMonster = false;
 
-    private void Start()
+    public void Reinitialize()
     {
         if (monsterModel != null)
+        {
             monsterRenderers = monsterModel.GetComponentsInChildren<Renderer>();
+            hasMonster = monsterRenderers != null && monsterRenderers.Length > 0;
+            SetMonsterVisible(false);
+        }
+        else
+        {
+            hasMonster = false;
+            monsterRenderers = null;
+        }
 
-        SetMonsterVisible(false);
+        SetHumanVisible(true);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("LightZone")) return;
 
-        Debug.Log("Entered LightZone");
+        if (monsterModel == null || !monsterModel.activeInHierarchy)
+        {
+            Debug.Log("Monster inactive or not present, keeping human visible.");
+            return;
+        }
 
+        Debug.Log("Entered LightZone");
         SetHumanVisible(false);
         SetMonsterVisible(true);
     }
-
 
     private void SetHumanVisible(bool isVisible)
     {
