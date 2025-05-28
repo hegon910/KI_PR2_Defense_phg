@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using UnityEngine.AI;
 
 public class FakeDevPoolManager : MonoBehaviour
 {
@@ -60,18 +61,33 @@ public class FakeDevPoolManager : MonoBehaviour
 
                 var initializer = obj.GetComponent<FakeDevInitializer>();
                 if (initializer != null)
+                    initializer.Reinitialize();
+
+                obj.SetActive(true); //  먼저 활성화
+                var agent = obj.GetComponent<NavMeshAgent>();
+                if (agent != null)
                 {
-                    initializer.Reinitialize(); // 반드시 여기에 호출
+                    if (!agent.isOnNavMesh)
+                    {
+                        Debug.LogWarning($"{obj.name} is not on NavMesh! Cannot set destination.");
+                        return;
+                    }
+                    agent.enabled = false;
+                    agent.enabled = true;
                 }
+
                 var walker = obj.GetComponent<EnemyWalker>();
                 if (walker != null && goalTransform != null)
+                {
                     walker.targetPlace = goalTransform;
+                    walker.Activate(); // 내부에서 isOnNavMesh 체크 포함
+                }
 
-                obj.SetActive(true);
                 return;
             }
         }
     }
+
 
     public void ReturnToPool(GameObject obj)
     {

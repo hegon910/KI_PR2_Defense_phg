@@ -17,6 +17,8 @@ public class EnemyWalker : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
 
+        if (targetPlace != null)
+            agent.SetDestination(targetPlace.position);
         if (animator == null)
             animator = GetComponentInChildren<Animator>(true);
 
@@ -25,11 +27,7 @@ public class EnemyWalker : MonoBehaviour
     }
     private void Start()
     {
-        if (targetPlace != null)
-            {
-                agent.SetDestination(targetPlace.position);
-            }
-        
+
         if (animator == null || animator.runtimeAnimatorController == null|| animator2 == null || animator2.runtimeAnimatorController == null)
         {
             Debug.LogError("Animator or AnimatorController is missing on: " + name);
@@ -44,6 +42,14 @@ public class EnemyWalker : MonoBehaviour
 
         animator.SetBool("IsWalking", true);
         animator2.SetBool("IsWalking", true);
+    }
+
+    public void Activate()
+    {
+        if (targetPlace != null && agent != null && agent.isOnNavMesh)
+        {
+            agent.SetDestination(targetPlace.position);
+        }
     }
 
     private void Update()
