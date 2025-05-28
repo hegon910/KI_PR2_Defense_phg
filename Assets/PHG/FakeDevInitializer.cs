@@ -11,15 +11,15 @@ public class FakeDevInitializer : MonoBehaviour
     [Header("캐릭터 커스터마이징")]
     [SerializeField] private CharacterCustomization customizableCharacter;
     [SerializeField] private List<CharacterSettings> settingsPool;
-
+    private bool isMonster = false;
     public void Reinitialize()
     {
         if (humanModel != null)
             humanModel.SetActive(true);
 
         float randomVal = Random.Range(0f, 1f);
-        bool hasMonster = randomVal < 0.2f;
-        Debug.Log($"Monster chance: {randomVal} => {hasMonster}");
+        isMonster = randomVal < 0.2f;
+        Debug.Log($"Monster chance: {randomVal} => {isMonster}");
 
         if (monsterModel != null)
         {
@@ -27,7 +27,7 @@ public class FakeDevInitializer : MonoBehaviour
             foreach (var renderer in monsterRenderers)
                 renderer.enabled = false;
 
-            monsterModel.SetActive(hasMonster);
+            monsterModel.SetActive(isMonster);
         }
 
         if (customizableCharacter != null && settingsPool.Count > 0)
@@ -46,5 +46,9 @@ public class FakeDevInitializer : MonoBehaviour
             if (cameraWalk != null)
                 cameraWalk.Reinitialize();
         }
+    }
+    public bool IsMonster()
+    {
+        return isMonster;
     }
 }

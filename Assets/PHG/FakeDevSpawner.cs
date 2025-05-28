@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 public class FakeDevPoolManager : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class FakeDevPoolManager : MonoBehaviour
     public float spawnDelay = 0.05f;
 
     private List<GameObject> objectPool = new List<GameObject>();
+
+    [Header("명시할 Target")]
+    public Transform goalTransform;
+
 
     private void Start()
     {
@@ -58,6 +63,9 @@ public class FakeDevPoolManager : MonoBehaviour
                 {
                     initializer.Reinitialize(); // 반드시 여기에 호출
                 }
+                var walker = obj.GetComponent<EnemyWalker>();
+                if (walker != null && goalTransform != null)
+                    walker.targetPlace = goalTransform;
 
                 obj.SetActive(true);
                 return;
@@ -69,4 +77,6 @@ public class FakeDevPoolManager : MonoBehaviour
     {
         obj.SetActive(false);
     }
+    
+
 }
