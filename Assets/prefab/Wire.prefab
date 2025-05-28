@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1236628180993124502}
   - component: {fileID: 4162340888209947558}
+  - component: {fileID: 4284929611919225849}
   m_Layer: 0
   m_Name: Wire
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10.990184, y: 0.0000038146973, z: 40.72403}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 2.15, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4440384489445118296}
@@ -58,8 +59,24 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3, y: 1, z: 1}
+  m_Size: {x: 4, y: 1, z: 1}
   m_Center: {x: 1.2, y: 0.4, z: 0}
+--- !u!208 &4284929611919225849
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 464708601642203482}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 1.2, y: 0.4, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &792758370217256792
 GameObject:
   m_ObjectHideFlags: 0

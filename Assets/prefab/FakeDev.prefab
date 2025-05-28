@@ -7350,7 +7350,7 @@ Transform:
   m_GameObject: {fileID: 4701638446892941405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.6, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7830,50 +7830,6 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.5
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 1570268443582790932}
-    - renderer: {fileID: 9140129351415790031}
-    - renderer: {fileID: 507892931506543958}
-    - renderer: {fileID: 1726254888729052552}
-    - renderer: {fileID: 7447338944090874327}
-    - renderer: {fileID: 6709417712787341241}
-    - renderer: {fileID: 2781785448324483703}
-    - renderer: {fileID: 6273464741535838584}
-    - renderer: {fileID: 6000621309114179063}
-    - renderer: {fileID: 519281419407869065}
-    - renderer: {fileID: 845640609318719423}
-    - renderer: {fileID: 9004084476110593969}
-    - renderer: {fileID: 2510570330926986721}
-    - renderer: {fileID: 3463544275798568407}
-    - renderer: {fileID: 7883294742210928112}
-    - renderer: {fileID: 5024929862722749842}
-    - renderer: {fileID: 7268486014320764219}
-    - renderer: {fileID: 2182165296550231576}
-    - renderer: {fileID: 557215577597028427}
-  - screenRelativeHeight: 0.2
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 476986660092456145}
-    - renderer: {fileID: 4750165745007067702}
-    - renderer: {fileID: 7756771494520290435}
-    - renderer: {fileID: 4395246696458848664}
-    - renderer: {fileID: 2998182153449744074}
-    - renderer: {fileID: 6733971409716761846}
-    - renderer: {fileID: 7139200624768601739}
-    - renderer: {fileID: 4087706165349601779}
-    - renderer: {fileID: 2192878508641944501}
-    - renderer: {fileID: 4601154136404805330}
-    - renderer: {fileID: 2425785239065792074}
-    - renderer: {fileID: 1204009979000072653}
-    - renderer: {fileID: 1031202829365233811}
-    - renderer: {fileID: 3218176409410569149}
-    - renderer: {fileID: 7310574383975567395}
-    - renderer: {fileID: 8175430987308611296}
-    - renderer: {fileID: 1392362048027950915}
-    - renderer: {fileID: 3794113367237283019}
-    - renderer: {fileID: 5823175389296640084}
   - screenRelativeHeight: 0.05
     fadeTransitionWidth: 0
     renderers:
@@ -11491,9 +11447,9 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 36
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!95 &1316476555318257321
 Animator:
@@ -11576,7 +11532,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: 0.2
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!1 &7309762649462107572
@@ -14533,7 +14489,7 @@ PrefabInstance:
     - target: {fileID: 3490026887102541896, guid: e0a2ae8d8ae1c1f4b83e337da0b6f6b4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.626
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3490026887102541896, guid: e0a2ae8d8ae1c1f4b83e337da0b6f6b4,
         type: 3}
@@ -14583,7 +14539,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3490026887102114920, guid: e0a2ae8d8ae1c1f4b83e337da0b6f6b4,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5656502402274342767}
   m_SourcePrefab: {fileID: 100100000, guid: e0a2ae8d8ae1c1f4b83e337da0b6f6b4, type: 3}
 --- !u!95 &7147571734798869424 stripped
 Animator:
@@ -14603,3 +14563,21 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6007333965916470296}
   m_PrefabAsset: {fileID: 0}
+--- !u!205 &5656502402274342767
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7147571734808252528}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.1
+    fadeTransitionWidth: 0
+    renderers: []
+  m_Enabled: 1

@@ -18,7 +18,7 @@ public class FakeDevInitializer : MonoBehaviour
             humanModel.SetActive(true);
 
         float randomVal = Random.Range(0f, 1f);
-        isMonster = randomVal < 0.2f;
+        isMonster = randomVal < 0.7f;
         Debug.Log($"Monster chance: {randomVal} => {isMonster}");
 
         if (monsterModel != null)
