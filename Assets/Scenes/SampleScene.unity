@@ -724,7 +724,15 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1506795636}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100096, guid: 3e44f86169ecf5f41926bb82427b87d6,
+        type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 801604278}
+    - targetCorrespondingSourceObject: {fileID: 100096, guid: 3e44f86169ecf5f41926bb82427b87d6,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 801604279}
   m_SourcePrefab: {fileID: 100100000, guid: 3e44f86169ecf5f41926bb82427b87d6, type: 3}
 --- !u!1001 &165015345
 PrefabInstance:
@@ -1567,6 +1575,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2d31914e18bb09429eaf449c47baa6f, type: 3}
+--- !u!1 &261077495 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100096, guid: 3e44f86169ecf5f41926bb82427b87d6,
+    type: 3}
+  m_PrefabInstance: {fileID: 163085663}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &278938663 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8540284270324451307, guid: 4d09acfefa4b0e44388ef8e7322b9a76,
@@ -1672,7 +1686,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.020727081, y: -0.9787541, z: 0.13930614, w: 0.14901215}
+  m_LocalRotation: {x: 0.020727089, y: -0.9787541, z: 0.13930619, w: 0.14901215}
   m_LocalPosition: {x: 25.297709, y: 16.989426, z: 97.01512}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3642,6 +3656,69 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 163085663}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &801604277 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: 3e44f86169ecf5f41926bb82427b87d6,
+    type: 3}
+  m_PrefabInstance: {fileID: 163085663}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &801604278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261077495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b04e5489af0d1148b148cac365413bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shootAction: {fileID: -3355589998393294619, guid: 9e406d1b900063544b22f077de631f0d,
+    type: 3}
+  _aimAction: {fileID: -3466678883794063414, guid: 9e406d1b900063544b22f077de631f0d,
+    type: 3}
+  _aimCamera: {fileID: 1576721512}
+  _animator: {fileID: 801604277}
+--- !u!114 &801604279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261077495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 9e406d1b900063544b22f077de631f0d,
+    type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dd75355d-26ba-49e0-9ac8-89a853443bc6
+    m_ActionName: GamePlay/Aim[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 00f1cc51-1ca2-4ad1-a08d-2c405cf8bc1b
+    m_ActionName: GamePlay/Shoot[/Mouse/leftButton]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: GamePlay
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &807553068
 GameObject:
   m_ObjectHideFlags: 0
@@ -6872,7 +6949,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 2
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
@@ -7718,7 +7795,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 3
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
