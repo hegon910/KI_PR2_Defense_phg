@@ -45,6 +45,10 @@ public class FakeDevInitializer : MonoBehaviour
             var cameraWalk = GetComponent<CameraWalk>();
             if (cameraWalk != null)
                 cameraWalk.Reinitialize();
+
+            var identity = GetComponent<EnemyIdentity>();
+            if (identity != null)
+                identity.InitializeIdentity(isMonster);
         }
     }
     public bool IsMonster()
