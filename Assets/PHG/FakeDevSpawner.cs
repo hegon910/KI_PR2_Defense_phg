@@ -76,7 +76,6 @@ public class FakeDevPoolManager : MonoBehaviour
                 {
                     if (!agent.isOnNavMesh)
                     {
-                        Debug.LogWarning($"{obj.name} is not on NavMesh! Cannot set destination.");
                         return;
                     }
                     agent.enabled = false;

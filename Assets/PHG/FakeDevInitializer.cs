@@ -19,7 +19,6 @@ public class FakeDevInitializer : MonoBehaviour
 
         float randomVal = Random.Range(0f, 1f);
         isMonster = randomVal < 0.7f;
-        Debug.Log($"Monster chance: {randomVal} => {isMonster}");
 
         if (monsterModel != null)
         {
@@ -40,7 +39,6 @@ public class FakeDevInitializer : MonoBehaviour
             UnityEngine.Random.InitState(seed);
 
             customizableCharacter.Randomize();
-            Debug.Log($"Reinit with preset: {randomSettings.name}, Seed: {seed}");
 
             var cameraWalk = GetComponent<CameraWalk>();
             if (cameraWalk != null)
