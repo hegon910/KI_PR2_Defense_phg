@@ -36,7 +36,7 @@ public class CameraWalk : MonoBehaviour
         }
 
         Debug.Log("Entered LightZone");
-        SetHumanVisible(false);
+       // SetHumanVisible(false);
         SetMonsterVisible(true);
     }
 

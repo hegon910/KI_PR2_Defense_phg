@@ -15,8 +15,8 @@ TagManager:
   - Monster
   - Human
   - LightZone
-  - 
-  - 
+  - Player
+  - IgnoreVision
   - 
   - 
   - 

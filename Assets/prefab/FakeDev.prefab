@@ -7336,7 +7336,7 @@ GameObject:
   - component: {fileID: 6962946232892554162}
   - component: {fileID: 2294646555696838209}
   m_Layer: 7
-  m_Name: CustomizableCharacter
+  m_Name: HumanModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11392,6 +11392,7 @@ GameObject:
   - component: {fileID: 7583044079944228158}
   - component: {fileID: 8839974147907340064}
   - component: {fileID: 2732908583670441192}
+  - component: {fileID: 3967855499989927408}
   m_Layer: 0
   m_Name: FakeDev
   m_TagString: Untagged
@@ -11444,7 +11445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPlace: {fileID: 5921948952291273047, guid: ca942aeb777344a4e8fbed57ea93dba1,
     type: 3}
-  moveSpeed: 2
+  moveSpeed: 4
   animator: {fileID: 7147571734798869424}
   animator2: {fileID: 2034273908801431923}
 --- !u!54 &8674530715889590388
@@ -11572,6 +11573,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsMonster: 0
   IsRevealed: 0
+--- !u!114 &3967855499989927408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7160001417953800812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 841aefa6c6f89584fab7e7186d786edc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7309762649462107572
 GameObject:
   m_ObjectHideFlags: 0
@@ -13811,7 +13824,7 @@ PrefabInstance:
     - target: {fileID: 3490026887102114920, guid: e0a2ae8d8ae1c1f4b83e337da0b6f6b4,
         type: 3}
       propertyPath: m_Name
-      value: Base mesh MonsterMutant7 skin1
+      value: MonsterModel
       objectReference: {fileID: 0}
     - target: {fileID: 3490026887102114920, guid: e0a2ae8d8ae1c1f4b83e337da0b6f6b4,
         type: 3}

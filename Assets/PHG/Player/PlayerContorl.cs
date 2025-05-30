@@ -9,6 +9,7 @@ public class PlayerContorl : MonoBehaviour
     [SerializeField] private InputActionReference _shootAction;
     [SerializeField] private InputActionReference _aimAction;
     [SerializeField] private InputActionReference _lookAction;
+    [SerializeField] private InputActionReference _reloadAction;
 
     [Header("Shoot Options")]
     [SerializeField] private float shootDistance = 100f;
@@ -16,6 +17,7 @@ public class PlayerContorl : MonoBehaviour
     [SerializeField] private GameObject sparkVFX;
     [SerializeField] private int maxAmmo = 5;
     [SerializeField] private Transform rayOrigin;
+    [SerializeField] private float shootCooldown = 1f;
 
     [Header("Camera & Animation")]
     [SerializeField] private CinemachineVirtualCamera _aimCamera;
@@ -34,13 +36,16 @@ public class PlayerContorl : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioSource gunShotAudio;
     [SerializeField] private AudioClip gunShotClip;
-
+    [SerializeField] private AudioClip reloadClip;
+    [SerializeField] private AudioSource reloadAudio;
 
     private bool isAiming;
     private float rotationX;
     private float rotationY;
     private float targetAlpha = 0;
     public int currentAmmo;
+    private bool canShoot = true;
+    private bool isReloading = false;
 
 
     private void Awake()
@@ -60,10 +65,12 @@ public class PlayerContorl : MonoBehaviour
         _shootAction.action.performed += OnShoot;
         _aimAction.action.started += OnAimStarted;
         _aimAction.action.canceled += OnAimCancelded;
+        _reloadAction.action.performed += OnReload;
 
         _shootAction.action.Enable();
         _aimAction.action.Enable();
         _lookAction.action.Enable();
+        _reloadAction.action.Enable();
     }
 
     private void OnDisable()
@@ -71,10 +78,12 @@ public class PlayerContorl : MonoBehaviour
         _shootAction.action.performed -= OnShoot;
         _aimAction.action.started -= OnAimStarted;
         _aimAction.action.canceled -= OnAimCancelded;
+        _reloadAction.action.performed -= OnReload;
 
         _shootAction.action.Disable();
         _aimAction.action.Disable();
         _lookAction.action.Disable();
+        _reloadAction.action.Disable();
     }
 
     private void Update()
@@ -100,8 +109,9 @@ public class PlayerContorl : MonoBehaviour
     public void OnShoot(InputAction.CallbackContext context)
     {
         Debug.Log("OnShoot 호출됨");
-        if (!isAiming || currentAmmo <= 0) return;
+        if (!isAiming || currentAmmo <= 0||!canShoot||isReloading) return;
 
+        StartCoroutine(ShootCooldown());
         currentAmmo--;
         _animator.SetTrigger("Attack");
         gunShotAudio?.PlayOneShot(gunShotClip);
@@ -139,6 +149,12 @@ public class PlayerContorl : MonoBehaviour
         Destroy(spark, 2f);
     }
 
+    private IEnumerator ShootCooldown()
+    {
+        canShoot = false;
+        yield return new WaitForSeconds(shootCooldown);
+        canShoot = true;
+    }
 
     private IEnumerator ShakeRawImage()
     {
@@ -157,6 +173,30 @@ public class PlayerContorl : MonoBehaviour
         aimView.rectTransform.localPosition = originalPos;
     }
 
+    private void OnReload(InputAction.CallbackContext context)
+    {
+        if (isReloading || currentAmmo == maxAmmo) return;
+        StartCoroutine(ReloadRoutine());
+    }
+
+    private IEnumerator ReloadRoutine()
+    {
+        isReloading = true;
+
+        if (reloadAudio != null && reloadClip != null)
+        {
+            reloadAudio.PlayOneShot(reloadClip);
+            yield return new WaitForSeconds(reloadClip.length);
+        }
+        else
+        {
+            yield return new WaitForSeconds(1f); // 기본 재장전 시간
+        }
+
+        currentAmmo = maxAmmo;
+        isReloading = false;
+        Debug.Log("재장전 완료");
+    }
 
     private void OnAimStarted(InputAction.CallbackContext context)
     {
