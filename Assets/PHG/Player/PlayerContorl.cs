@@ -1,5 +1,4 @@
 using Cinemachine;
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -80,17 +79,16 @@ public class PlayerContorl : MonoBehaviour
 
     private void Update()
     {
-        if(isAiming)
-        {
-            Vector2 lookDelta = _lookAction.action.ReadValue<Vector2>() * sensitivity;
-            rotationX += lookDelta.x;
-            rotationY -= lookDelta.y;
 
-            rotationX = Mathf.Clamp(rotationX, -clamAngleX, clamAngleX);
-            rotationY = Mathf.Clamp(rotationY, -clampAngleY, clampAngleY);
+        Vector2 lookDelta = _lookAction.action.ReadValue<Vector2>() * sensitivity;
+        rotationX += lookDelta.x;
+        rotationY -= lookDelta.y;
 
-            cameraRoot.localRotation = Quaternion.Euler(rotationY, rotationX, 0f);
-        }
+        rotationX = Mathf.Clamp(rotationX, -clamAngleX, clamAngleX);
+        rotationY = Mathf.Clamp(rotationY, -clampAngleY, clampAngleY);
+
+        cameraRoot.localRotation = Quaternion.Euler(rotationY, rotationX, 0f);
+
         if (Mathf.Abs(aimCanvas.alpha - targetAlpha) > 0.01f)
         {
             aimCanvas.alpha = Mathf.MoveTowards(
@@ -105,37 +103,42 @@ public class PlayerContorl : MonoBehaviour
         if (!isAiming || currentAmmo <= 0) return;
 
         currentAmmo--;
-        //SetHealthUIGuage; //Todo: 탄약UI로 교체 필요
-
         _animator.SetTrigger("Attack");
+        gunShotAudio?.PlayOneShot(gunShotClip);
+        StartCoroutine(ShakeRawImage());
 
-        if (isAiming)
-        {
-            _animator.SetTrigger("Attack");
-            gunShotAudio?.PlayOneShot(gunShotClip);
-            StartCoroutine(ShakeRawImage()); // 또는 DOTween 방식
-        }
-
-        Vector3 center = new Vector3(Screen.width / 2, Screen.height / 2, 0);
-        Ray ray = new Ray(rayOrigin.position, rayOrigin.forward);
+        Vector3 shootDir = rayOrigin.forward;
+        Ray ray = new Ray(rayOrigin.position, shootDir);
         Debug.DrawRay(ray.origin, ray.direction * shootDistance, Color.red, 5f);
-        RaycastHit hit;
 
-        if(Physics.Raycast(ray, out hit, shootDistance, hitLayerMask))
+        RaycastHit hit;
+        Vector3 spawnPos;
+        Quaternion spawnRot;
+
+        if (Physics.Raycast(ray, out hit, shootDistance, hitLayerMask))
         {
-            if(sparkVFX != null)
-            {
-                Instantiate(sparkVFX, hit.point, Quaternion.LookRotation(hit.normal));
-            }
+            spawnPos = hit.point;
+            spawnRot = Quaternion.LookRotation(hit.normal);
 
             var identity = hit.collider.GetComponentInParent<EnemyIdentity>();
-            if(identity != null)
+            if (identity != null)
             {
                 identity.HandleHit();
             }
         }
+        else
+        {
+            spawnPos = ray.origin + shootDir * shootDistance;
+            spawnRot = Quaternion.LookRotation(-shootDir);
+        }
 
+        // 이 위치에서 무조건 VFX 생성
+        GameObject spark = Instantiate(sparkVFX, spawnPos, spawnRot);
+        var ps = spark.GetComponent<ParticleSystem>();
+        if (ps != null) ps.Play();
+        Destroy(spark, 2f);
     }
+
 
     private IEnumerator ShakeRawImage()
     {
@@ -165,16 +168,16 @@ public class PlayerContorl : MonoBehaviour
         targetAlpha = 1f;
 
 
-   
-          
+
+
     }
 
     private void OnAimCancelded(InputAction.CallbackContext context)
     {
         isAiming = false;
-       
+
         _aimCamera.gameObject.SetActive(false);
-  
+
         _animator.SetBool("Aiming", false);
         targetAlpha = 0f;
 
