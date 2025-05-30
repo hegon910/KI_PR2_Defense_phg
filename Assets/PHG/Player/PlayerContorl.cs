@@ -185,12 +185,13 @@ public class PlayerContorl : MonoBehaviour
 
         if (reloadAudio != null && reloadClip != null)
         {
+            
             reloadAudio.PlayOneShot(reloadClip);
-            yield return new WaitForSeconds(reloadClip.length);
+            yield return new WaitForSeconds(reloadClip.length + 0.5f);
         }
         else
         {
-            yield return new WaitForSeconds(1f); // 기본 재장전 시간
+            yield return new WaitForSeconds(2f); // 기본 재장전 시간
         }
 
         currentAmmo = maxAmmo;
@@ -204,7 +205,7 @@ public class PlayerContorl : MonoBehaviour
         _animator.SetBool("Aiming", true);
 
         _aimCamera.gameObject.SetActive(true);
-        aimCanvas.alpha = 0f;
+        aimCanvas.alpha = 1;
         targetAlpha = 1f;
 
 
@@ -223,6 +224,10 @@ public class PlayerContorl : MonoBehaviour
 
     }
 
+    public bool IsAiming()
+    {
+        return isAiming;
+    }
 
 
 
