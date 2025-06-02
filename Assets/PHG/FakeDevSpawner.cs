@@ -1,7 +1,6 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class FakeDevPoolManager : MonoBehaviour
@@ -29,12 +28,12 @@ public class FakeDevPoolManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
-        
+
     }
     private void Start()
     {
         InitializePool();
-        StartCoroutine(SpawnBatchDelayed(poolSize / 2));
+        //StartCoroutine(SpawnBatchDelayed(poolSize / 2));
     }
 
     private void InitializePool()
@@ -45,6 +44,11 @@ public class FakeDevPoolManager : MonoBehaviour
             obj.SetActive(false);
             objectPool.Add(obj);
         }
+    }
+
+    public void StartSpawning()
+    {
+        StartCoroutine(SpawnBatchDelayed(poolSize / 2));
     }
 
     private IEnumerator SpawnBatchDelayed(int count)
@@ -99,6 +103,6 @@ public class FakeDevPoolManager : MonoBehaviour
     {
         obj.SetActive(false);
     }
-    
+
 
 }

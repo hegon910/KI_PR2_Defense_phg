@@ -28,7 +28,7 @@ public class GlobalHealthManager : MonoBehaviour
         if(currentHealth <= 0)
         {
             Debug.Log("GameOver");
-            FindObjectOfType<PlayerContorl>()?.GameOver();
+            FindObjectOfType<PlayerUIManager>()?.SHowGameOver();
         }
     }
 

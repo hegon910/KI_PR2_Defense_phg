@@ -31,7 +31,7 @@ public class PlayerContorl : MonoBehaviour
     [Header("Rotation Clamp")]
     [SerializeField] private float clamAngleX = 45f;
     [SerializeField] private float clampAngleY = 70f;
-    [SerializeField] private float sensitivity = 1.5f;
+    [SerializeField] public float sensitivity = 1.5f;
 
     [Header("Audio")]
     [SerializeField] private AudioSource gunShotAudio;
@@ -39,12 +39,7 @@ public class PlayerContorl : MonoBehaviour
     [SerializeField] private AudioClip reloadClip;
     [SerializeField] private AudioSource reloadAudio;
 
-    [Header("UI")]
-    [SerializeField] private TMPro.TextMeshProUGUI ammoText;
-    [SerializeField] private UnityEngine.UI.Slider healthSlider;
-    [SerializeField] private TMPro.TextMeshProUGUI reloadText;
-    [SerializeField] private GameObject gameOverPanel;
-    [SerializeField] private TMPro.TextMeshProUGUI scoreText;
+    [SerializeField] private PlayerUIManager uiManager;
 
 
     private bool isAiming;
@@ -54,6 +49,7 @@ public class PlayerContorl : MonoBehaviour
     public int currentAmmo;
     private bool canShoot = true;
     private bool isReloading = false;
+    public bool controlsEnabled = false;
 
 
     private void Awake()
@@ -96,6 +92,7 @@ public class PlayerContorl : MonoBehaviour
 
     private void Update()
     {
+        if (!controlsEnabled) return;
 
         Vector2 lookDelta = _lookAction.action.ReadValue<Vector2>() * sensitivity;
         rotationX += lookDelta.x;
@@ -113,17 +110,18 @@ public class PlayerContorl : MonoBehaviour
             );
         }
 
-        ammoText.text = $"Ammo : {currentAmmo} / {maxAmmo}";
-        healthSlider.value = GlobalHealthManager.Instance != null
-            ? GlobalHealthManager.Instance.GetHealthRatio() : 1f;
-        reloadText.gameObject.SetActive(isReloading);
-
-        scoreText.text = $"Score : {GlobalHealthManager.Instance?.Score ?? 0}";
-
+        if (uiManager != null && uiManager.gameObject.activeInHierarchy)
+        {
+            uiManager.UpdateAmmo(currentAmmo, maxAmmo);
+            uiManager.UpdateHealth(GlobalHealthManager.Instance.GetHealthRatio());
+            uiManager.SetReloading(isReloading);
+            uiManager.UpdateScore(GlobalHealthManager.Instance.Score);
+        }
     }
 
     public void OnShoot(InputAction.CallbackContext context)
     {
+        if (!controlsEnabled) return;
         Debug.Log("OnShoot »£√‚µ ");
         if (!isAiming || currentAmmo <= 0||!canShoot||isReloading) return;
 
@@ -191,6 +189,7 @@ public class PlayerContorl : MonoBehaviour
 
     private void OnReload(InputAction.CallbackContext context)
     {
+        if (!controlsEnabled) return;
         if (isReloading || currentAmmo == maxAmmo) return;
         StartCoroutine(ReloadRoutine());
     }
@@ -217,6 +216,7 @@ public class PlayerContorl : MonoBehaviour
 
     private void OnAimStarted(InputAction.CallbackContext context)
     {
+        if (!controlsEnabled) return;
         isAiming = true;
         _animator.SetBool("Aiming", true);
 
@@ -227,6 +227,7 @@ public class PlayerContorl : MonoBehaviour
 
     private void OnAimCancelded(InputAction.CallbackContext context)
     {
+        if (!controlsEnabled) return;
         isAiming = false;
 
         _aimCamera.gameObject.SetActive(false);
@@ -241,29 +242,18 @@ public class PlayerContorl : MonoBehaviour
         return isAiming;
     }
 
-
-
-    public void TakeDamage()
+    public void EnableControls()
     {
-        //TODO
+        controlsEnabled = true;
     }
 
-    public void GameOver()
+    public void DisableControls()
     {
-        gameOverPanel.SetActive(true);
-        Time.timeScale = 0f;
+        controlsEnabled = false;
     }
 
-    public void SubscribeEvent()
-    { }
-
-    public void UnsubscribeEvent()
+    public void SetSenseitivity(float value)
     {
-
-    }
-
-    private void SetHealthUIGuage()
-    {
-
+        sensitivity = value;
     }
 }
