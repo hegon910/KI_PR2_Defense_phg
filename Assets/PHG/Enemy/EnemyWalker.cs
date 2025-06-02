@@ -19,6 +19,7 @@ public class EnemyWalker : MonoBehaviour
 
         if (targetPlace != null)
             agent.SetDestination(targetPlace.position);
+        agent.speed = moveSpeed;
         if (animator == null)
             animator = GetComponentInChildren<Animator>(true);
 
