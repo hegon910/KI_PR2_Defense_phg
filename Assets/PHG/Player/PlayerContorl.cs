@@ -39,6 +39,14 @@ public class PlayerContorl : MonoBehaviour
     [SerializeField] private AudioClip reloadClip;
     [SerializeField] private AudioSource reloadAudio;
 
+    [Header("UI")]
+    [SerializeField] private TMPro.TextMeshProUGUI ammoText;
+    [SerializeField] private UnityEngine.UI.Slider healthSlider;
+    [SerializeField] private TMPro.TextMeshProUGUI reloadText;
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private TMPro.TextMeshProUGUI scoreText;
+
+
     private bool isAiming;
     private float rotationX;
     private float rotationY;
@@ -104,6 +112,14 @@ public class PlayerContorl : MonoBehaviour
                 aimCanvas.alpha, targetAlpha, Time.deltaTime * fadeDuration
             );
         }
+
+        ammoText.text = $"Ammo : {currentAmmo} / {maxAmmo}";
+        healthSlider.value = GlobalHealthManager.Instance != null
+            ? GlobalHealthManager.Instance.GetHealthRatio() : 1f;
+        reloadText.gameObject.SetActive(isReloading);
+
+        scoreText.text = $"Score : {GlobalHealthManager.Instance?.Score ?? 0}";
+
     }
 
     public void OnShoot(InputAction.CallbackContext context)
@@ -191,7 +207,7 @@ public class PlayerContorl : MonoBehaviour
         }
         else
         {
-            yield return new WaitForSeconds(2f); // 기본 재장전 시간
+            yield return new WaitForSeconds(3f); // 기본 재장전 시간
         }
 
         currentAmmo = maxAmmo;
@@ -207,10 +223,6 @@ public class PlayerContorl : MonoBehaviour
         _aimCamera.gameObject.SetActive(true);
         aimCanvas.alpha = 1;
         targetAlpha = 1f;
-
-
-
-
     }
 
     private void OnAimCancelded(InputAction.CallbackContext context)
@@ -237,7 +249,10 @@ public class PlayerContorl : MonoBehaviour
     }
 
     public void GameOver()
-    { }
+    {
+        gameOverPanel.SetActive(true);
+        Time.timeScale = 0f;
+    }
 
     public void SubscribeEvent()
     { }
@@ -251,7 +266,4 @@ public class PlayerContorl : MonoBehaviour
     {
 
     }
-
-
-
 }

@@ -24,13 +24,13 @@ public class EnemyIdentity : MonoBehaviour
         if(IsMonster)
         {
             Debug.Log("몬스터 처치");
-                //TODO : 점수 증가
+            GlobalHealthManager.Instance.AddScroe(100);
         }
         else
         {
             Debug.Log("시민 사살 패터닐 예정");
-            GlobalHealthManager.Instance.DecreaseHealth(1f);
-            //TODO : 패널티 작용
+            GlobalHealthManager.Instance.DecreaseHealth(10f);
+            GlobalHealthManager.Instance.AddScroe(-200);
         }
 
         FakeDevPoolManager.Instance.ReturnToPool(gameObject);
