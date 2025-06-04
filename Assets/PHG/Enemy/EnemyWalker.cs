@@ -15,6 +15,7 @@ public class EnemyWalker : MonoBehaviour
 
     private void Awake()
     {
+        if (GameManager.IsGameOver) return;
         agent = GetComponent<NavMeshAgent>();
 
         if (targetPlace != null)
@@ -28,6 +29,7 @@ public class EnemyWalker : MonoBehaviour
     }
     private void Start()
     {
+        if (GameManager.IsGameOver) return;
 
         if (animator == null || animator.runtimeAnimatorController == null|| animator2 == null || animator2.runtimeAnimatorController == null)
         {
@@ -47,6 +49,7 @@ public class EnemyWalker : MonoBehaviour
 
     public void Activate()
     {
+        if (GameManager.IsGameOver) return;
         if (targetPlace != null && agent != null && agent.isOnNavMesh)
         {
             agent.SetDestination(targetPlace.position);

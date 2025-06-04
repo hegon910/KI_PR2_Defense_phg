@@ -29,7 +29,7 @@ public class EnemyIdentity : MonoBehaviour
         else
         {
             Debug.Log("Ω√πŒ ªÁªÏ ∆–≈Õ¥“ øπ¡§");
-            GlobalHealthManager.Instance.DecreaseHealth(10f);
+            GlobalHealthManager.Instance.DecreaseHealth(20f);
             GlobalHealthManager.Instance.AddScroe(-200);
         }
 

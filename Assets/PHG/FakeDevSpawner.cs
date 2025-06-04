@@ -46,22 +46,34 @@ public class FakeDevPoolManager : MonoBehaviour
         }
     }
 
-    public void SpawnBatch(int count)
+    public void SpawnBatch(int totalCount, int groupSize)
     {
-        StartCoroutine(SpawnBatchDelayed(count, spawnDelay));
+        if (GameManager.IsGameOver) return;
+        StartCoroutine(SpawnBatchDelayed(totalCount, groupSize, spawnDelay));
     }
 
-    private IEnumerator SpawnBatchDelayed(int count, float delay)
+
+    private IEnumerator SpawnBatchDelayed(int totalCount, int groupSize, float delay)
     {
-        for (int i = 0; i < count; i++)
+        int spawned = 0;
+
+        while (spawned < totalCount)
         {
-            SpawnFromPool();
+            int batchCount = Mathf.Min(groupSize, totalCount - spawned);
+
+            for (int i = 0; i < batchCount; i++)
+            {
+                SpawnFromPool();
+                spawned++;
+            }
+
             yield return new WaitForSeconds(delay);
         }
     }
 
     public void SpawnFromPool()
     {
+        if (GameManager.IsGameOver) return;
         foreach (GameObject obj in objectPool)
         {
             if (!obj.activeInHierarchy)

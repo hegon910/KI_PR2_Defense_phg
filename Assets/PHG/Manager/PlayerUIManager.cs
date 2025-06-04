@@ -12,6 +12,7 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private TMPro.TextMeshProUGUI scoreText;
     [SerializeField] private TMPro.TextMeshProUGUI toolTipText;
+    [SerializeField] private TMPro.TextMeshProUGUI gameOvertxt;
 
     private void Update()
     {
@@ -40,6 +41,9 @@ public class PlayerUIManager : MonoBehaviour
     public void SHowGameOver()
     {
         gameOverPanel.SetActive(true);
+        gameOvertxt.text =  $"Game OVER \n Your Score : {scoreText.text}";
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0f;
     }
 
@@ -52,23 +56,13 @@ public class PlayerUIManager : MonoBehaviour
         }
   
     }
-    public void OnRetryClicked()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+
 
     public void OnReturnToTitleClicked()
     {
         Time.timeScale = 1f;
-
-        GameManager.Instance?.ResetGame();
-
-        var titleUI = FindObjectOfType<TtileUIManager>();
-        if(titleUI != null)
-        {
-            titleUI.ResetToTitle();
-        }
+        gameOverPanel.SetActive(false);
+        SceneManager.LoadScene("TitleScene");
 
     }
 }

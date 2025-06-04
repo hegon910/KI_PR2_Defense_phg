@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class PlayerContorl : MonoBehaviour
 {
@@ -93,6 +94,7 @@ public class PlayerContorl : MonoBehaviour
     private void Update()
     {
         if (!controlsEnabled) return;
+        if (GameManager.IsGameOver) return;
 
         Vector2 lookDelta = _lookAction.action.ReadValue<Vector2>() * sensitivity;
         rotationX += lookDelta.x;
@@ -121,6 +123,7 @@ public class PlayerContorl : MonoBehaviour
 
     public void OnShoot(InputAction.CallbackContext context)
     {
+        if (GameManager.IsGameOver) return;
         if (!controlsEnabled) return;
         Debug.Log("OnShoot »£√‚µ ");
         if (!isAiming || currentAmmo <= 0||!canShoot||isReloading) return;
@@ -189,6 +192,7 @@ public class PlayerContorl : MonoBehaviour
 
     private void OnReload(InputAction.CallbackContext context)
     {
+        if (GameManager.IsGameOver) return;
         if (!controlsEnabled) return;
         if (isReloading || currentAmmo == maxAmmo) return;
         StartCoroutine(ReloadRoutine());
@@ -216,6 +220,12 @@ public class PlayerContorl : MonoBehaviour
 
     private void OnAimStarted(InputAction.CallbackContext context)
     {
+        if (GameManager.IsGameOver)
+        {
+            isAiming = false;
+            _aimCamera.gameObject.SetActive(false);
+            targetAlpha = 0f;
+        }
         if (!controlsEnabled) return;
         isAiming = true;
         _animator.SetBool("Aiming", true);
@@ -223,6 +233,7 @@ public class PlayerContorl : MonoBehaviour
         _aimCamera.gameObject.SetActive(true);
         aimCanvas.alpha = 1;
         targetAlpha = 1f;
+
     }
 
     private void OnAimCancelded(InputAction.CallbackContext context)

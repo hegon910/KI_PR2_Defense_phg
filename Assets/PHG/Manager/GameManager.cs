@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     private int enemiestToSpawn;
     private int enemiesProcessed;
 
-    private bool isGameOver = false;
+    public static bool IsGameOver { get; private set; }
 
     private void Awake()
     {
@@ -28,20 +28,32 @@ public class GameManager : MonoBehaviour
 
     public void StartStage()
     {
+        IsGameOver = false;
         stageClearPanel.SetActive(false);
         
         enemiestToSpawn = FakeDevPoolManager.Instance.poolSize + (currentStage - 1) * 10;
         enemiesProcessed = 0;
+        StartCoroutine(StageText());
+        if (stageInfoText != null)
+        {
+            stageInfoText.text = $"Stage{currentStage} - 방문 예정자는 {enemiestToSpawn} 명입니다.";
+        }
 
-        stageInfoText.text = $"Stage{currentStage} - 방문 예정자는 {enemiestToSpawn} 명입니다.";
-
-        FakeDevPoolManager.Instance.SpawnBatch(enemiestToSpawn);
+        FakeDevPoolManager.Instance.SpawnBatch(enemiestToSpawn, currentStage);
     }
     
+    private IEnumerator StageText()
+    {
+        stageInfoText.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+        stageInfoText.gameObject.SetActive(false);
+
+    }
 
     public void OnEnemyProcessed()
     {
-        if (isGameOver) return;
+        if (IsGameOver) return;
 
         enemiesProcessed++;
 
@@ -54,26 +66,22 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator HandleStageClear()
     {
-        stageInfoText.text = $"Stage {currentStage} Clear\n Next {currentStage + 1} Stage, 방문 예정자 수:{enemiestToSpawn}";
+        stageInfoText.text = $"Stage Clear! \n Next STAGE: {currentStage + 1} Stage, 방문 예정자 :{enemiestToSpawn+ 10} 명";
+        stageInfoText.gameObject.SetActive(true);
         stageClearPanel.SetActive(true);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
         stageClearPanel.SetActive(false);
+        stageInfoText.gameObject.SetActive(false);
 
         currentStage++;
         StartStage();
     
     }
 
-    public void ResetGame()
-    {
-        StopAllCoroutines();
-        isGameOver = false;
-        currentStage = 1;
-    }
 
 
     public void OnPlayerDied()
     {
-        isGameOver = true;
+        IsGameOver = true;
     }
 }
