@@ -1,5 +1,6 @@
 using Cinemachine;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -43,7 +44,7 @@ public class PlayerContorl : MonoBehaviour
     [SerializeField] private PlayerUIManager uiManager;
 
 
-    private bool isAiming;
+    public bool isAiming;
     private float rotationX;
     private float rotationY;
     private float targetAlpha = 0;
@@ -220,11 +221,14 @@ public class PlayerContorl : MonoBehaviour
 
     private void OnAimStarted(InputAction.CallbackContext context)
     {
-        if (GameManager.IsGameOver)
+        if (GameManager.IsGameOver && isAiming)
         {
             isAiming = false;
+            controlsEnabled = false;
             _aimCamera.gameObject.SetActive(false);
-            targetAlpha = 0f;
+            aimCanvas.gameObject.SetActive(false);
+            aimView.gameObject.SetActive(false);
+            return;
         }
         if (!controlsEnabled) return;
         isAiming = true;

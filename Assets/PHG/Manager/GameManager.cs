@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEditor.ShaderGraph;
 
 public class GameManager : MonoBehaviour
 {
@@ -83,5 +84,10 @@ public class GameManager : MonoBehaviour
     public void OnPlayerDied()
     {
         IsGameOver = true;
+        var player = FindObjectOfType<PlayerContorl>();
+        if (player != null)
+        {
+            player.DisableControls();
+        }
     }
 }
