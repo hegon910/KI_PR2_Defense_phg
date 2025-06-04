@@ -9,6 +9,7 @@ public class TtileUIManager : MonoBehaviour
     public GameObject titlePanel;
     public GameObject optionsPanel;
     public GameObject titleCanvas;
+    public GameObject howToPlayPanel;
 
     [Header("Managers")]
     public PlayerContorl playercontroller;
@@ -17,6 +18,7 @@ public class TtileUIManager : MonoBehaviour
     public PlayableDirector openingTimeline;
     public PlayableDirector gameStartTimeline;
     public Slider mouseSensitivitySlider;
+   
 
     [Header("Audio")]
     public Slider masterVolumSlider;
@@ -29,6 +31,7 @@ public class TtileUIManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         titlePanel.SetActive(false);
         optionsPanel.SetActive(false);
+        howToPlayPanel.SetActive(false);
 
         if (backgroundMusic != null)
             masterVolumSlider.value = backgroundMusic.volume;
@@ -86,7 +89,6 @@ public class TtileUIManager : MonoBehaviour
         }
 
         playercontroller.EnableControls();
-        poolManager.StartSpawning();
         if (playerUIManager != null)
             playerUIManager.SetActive(true);
 
@@ -102,6 +104,8 @@ public class TtileUIManager : MonoBehaviour
             gameStartTimeline.Play();
         }
 
+        GameManager.Instance?.StartStage();
+
 
     }
 
@@ -116,11 +120,42 @@ public class TtileUIManager : MonoBehaviour
         if (backgroundMusic != null)
             backgroundMusic.volume = value;
     }
+
+    public void OnHowToPlayClicked()
+    {
+        titlePanel.SetActive(false);
+        howToPlayPanel.SetActive(true);
+    }
     public void OnBackFromOptions()
     {
         optionsPanel.SetActive(false);
+        if (howToPlayPanel != null) howToPlayPanel.SetActive(false);
         titlePanel.SetActive(true);     //
     }
+
+    public void ResetToTitle()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        titlePanel.SetActive(true);
+        titleCanvas.SetActive(true);
+        howToPlayPanel.SetActive(false);
+        optionsPanel.SetActive(false);
+
+        if (playercontroller != null) playercontroller.DisableControls();
+
+        if (playerUIManager != null) playerUIManager.SetActive(false);
+
+        if (backgroundMusic != null)
+        {
+            backgroundMusic.clip = null;
+            backgroundMusic.Stop();
+
+        }
+    }
+
+
     public void OnQuitClicked()
     {
 #if UNITY_EDITOR

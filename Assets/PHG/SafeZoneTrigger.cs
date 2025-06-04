@@ -30,5 +30,6 @@ public class SafeZoneTrigger : MonoBehaviour
         var poolManager = FindObjectOfType<FakeDevPoolManager>();
         if (poolManager != null)
             poolManager.ReturnToPool(other.gameObject);
+
     }
 }

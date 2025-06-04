@@ -29,6 +29,7 @@ public class GlobalHealthManager : MonoBehaviour
         {
             Debug.Log("GameOver");
             FindObjectOfType<PlayerUIManager>()?.SHowGameOver();
+            GameManager.Instance?.OnPlayerDied();
         }
     }
 

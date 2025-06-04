@@ -12,10 +12,10 @@ public class FakeDevPoolManager : MonoBehaviour
     public Transform[] spawnPoints;
 
     [Header("초기 풀 사이즈")]
-    public int poolSize = 20;
+    public int poolSize = 30;
 
     [Header("스폰 간 딜레이 (초)")]
-    public float spawnDelay = 0.05f;
+    public float spawnDelay = 2f;
 
     private List<GameObject> objectPool = new List<GameObject>();
 
@@ -46,17 +46,17 @@ public class FakeDevPoolManager : MonoBehaviour
         }
     }
 
-    public void StartSpawning()
+    public void SpawnBatch(int count)
     {
-        StartCoroutine(SpawnBatchDelayed(poolSize / 2));
+        StartCoroutine(SpawnBatchDelayed(count, spawnDelay));
     }
 
-    private IEnumerator SpawnBatchDelayed(int count)
+    private IEnumerator SpawnBatchDelayed(int count, float delay)
     {
         for (int i = 0; i < count; i++)
         {
             SpawnFromPool();
-            yield return new WaitForSeconds(spawnDelay);
+            yield return new WaitForSeconds(delay);
         }
     }
 
@@ -102,6 +102,7 @@ public class FakeDevPoolManager : MonoBehaviour
     public void ReturnToPool(GameObject obj)
     {
         obj.SetActive(false);
+        GameManager.Instance?.OnEnemyProcessed();
     }
 
 
