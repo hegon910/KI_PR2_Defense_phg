@@ -11573,6 +11573,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsMonster: 0
   IsRevealed: 0
+  audioSource: {fileID: 4336030103199315809, guid: 1566da7cb6f20a74b943bd3f345a85da,
+    type: 3}
+  humanClips:
+  - {fileID: 8300000, guid: ceafac318a0566f40ac2f1c8b0b0d6a4, type: 3}
+  - {fileID: 8300000, guid: 4f380c16e5fe2294585d0838583b7b48, type: 3}
+  - {fileID: 8300000, guid: d7e9116254cd99c4b89022850be95032, type: 3}
+  - {fileID: 8300000, guid: d320b660310cdb041904ae2da1db65e2, type: 3}
 --- !u!114 &3967855499989927408
 MonoBehaviour:
   m_ObjectHideFlags: 0

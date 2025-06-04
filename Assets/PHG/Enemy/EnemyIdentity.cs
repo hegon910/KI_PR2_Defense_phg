@@ -6,6 +6,9 @@ public class EnemyIdentity : MonoBehaviour
 {
     public bool IsMonster = false;
     public bool IsRevealed = false;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip[] humanClips;
+
 
     public void InitializeIdentity(bool isMonster)
     {
@@ -23,12 +26,24 @@ public class EnemyIdentity : MonoBehaviour
   
         if(IsMonster)
         {
-            Debug.Log("몬스터 처치");
             GlobalHealthManager.Instance.AddScroe(100);
         }
         else
         {
-            Debug.Log("시민 사살 패터닐 예정");
+            if (humanClips != null && humanClips.Length > 0 && audioSource != null)
+            {
+                int randIndex = Random.Range(0, humanClips.Length);
+                audioSource.clip = humanClips[randIndex];
+                audioSource.Play();
+                Debug.Log("음성 재생");
+
+                StartCoroutine(WaitForAudioThenReturn(audioSource.clip.length));
+            }
+            else
+            {
+                FakeDevPoolManager.Instance.ReturnToPool(gameObject);
+            }
+
             GlobalHealthManager.Instance.DecreaseHealth(20f);
             GlobalHealthManager.Instance.AddScroe(-200);
         }
@@ -36,6 +51,11 @@ public class EnemyIdentity : MonoBehaviour
         FakeDevPoolManager.Instance.ReturnToPool(gameObject);
     }
 
+    private IEnumerator WaitForAudioThenReturn(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        FakeDevPoolManager.Instance.ReturnToPool(gameObject);
+    }
 
 
 }
