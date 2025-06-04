@@ -20,6 +20,7 @@ public class PlayerContorl : MonoBehaviour
     [SerializeField] private int maxAmmo = 5;
     [SerializeField] private Transform rayOrigin;
     [SerializeField] private float shootCooldown = 1f;
+    [SerializeField] private TMPro.TextMeshProUGUI emptyAmmotxt;
 
     [Header("Camera & Animation")]
     [SerializeField] private CinemachineVirtualCamera _aimCamera;
@@ -40,6 +41,8 @@ public class PlayerContorl : MonoBehaviour
     [SerializeField] private AudioClip gunShotClip;
     [SerializeField] private AudioClip reloadClip;
     [SerializeField] private AudioSource reloadAudio;
+    [SerializeField] private AudioClip emptyAmmo;
+    [SerializeField] private AudioSource emptyAmmoAudio;
 
     [SerializeField] private PlayerUIManager uiManager;
 
@@ -127,10 +130,17 @@ public class PlayerContorl : MonoBehaviour
         if (GameManager.IsGameOver) return;
         if (!controlsEnabled) return;
         Debug.Log("OnShoot »£√‚µ ");
-        if (!isAiming || currentAmmo <= 0||!canShoot||isReloading) return;
+        if (!isAiming||!canShoot||isReloading) return;
 
         StartCoroutine(ShootCooldown());
         currentAmmo--;
+        if(currentAmmo < 0)
+        {
+            emptyAmmoAudio?.PlayOneShot(emptyAmmo);
+            StartCoroutine(EmptyAmmoAlert());
+            currentAmmo = 0;
+            return;
+        }
         _animator.SetTrigger("Attack");
         gunShotAudio?.PlayOneShot(gunShotClip);
         StartCoroutine(ShakeRawImage());
@@ -172,6 +182,13 @@ public class PlayerContorl : MonoBehaviour
         canShoot = false;
         yield return new WaitForSeconds(shootCooldown);
         canShoot = true;
+    }
+
+    private IEnumerator EmptyAmmoAlert()
+    {
+        emptyAmmotxt.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        emptyAmmotxt.gameObject.SetActive(false);
     }
 
     private IEnumerator ShakeRawImage()
